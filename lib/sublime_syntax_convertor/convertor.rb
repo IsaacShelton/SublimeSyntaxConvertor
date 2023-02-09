@@ -1,10 +1,12 @@
+require 'json'
+
 module SublimeSyntaxConvertor
   class Convertor
     include Formatter
     attr_reader :syntax
 
     def initialize(lang)
-      @lang       = Plist.parse_xml(lang)
+      @lang       = Plist.parse_xml(JSON.parse(lang).to_plist)
       @repository = @lang.fetch('repository', {})
       @patterns   = @lang.fetch('patterns', [])
       @syntax     = {}
